@@ -17,7 +17,7 @@ module.exports = {
     port: 9527,
     open: true,
     overlay: {
-      warnings: false,
+      warnings: true,
       errors: true
     },
     disableHostCheck: true
