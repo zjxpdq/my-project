@@ -18,8 +18,7 @@
     <!--      :slider-text="text"-->
     <!--    ></slide-verify>-->
     <!--    <div>{{msg}}</div>-->
-    {{initial}}
-
+    
     <login-module v-model="initial"></login-module>
     <a @click="initial = 'login'">登录</a>
     <br>

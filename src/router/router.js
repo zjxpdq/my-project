@@ -2,7 +2,7 @@ import Main from "../layout/Main"
 
 export default [
   {
-    path: "/",
+    path: "/about",
     name: "home",
     component: Main,
     children: [
@@ -14,7 +14,7 @@ export default [
     ]
   },
   {
-    path: "/about",
+    path: "/",
     name: "about",
     component: () => import("../views/About.vue")
   }

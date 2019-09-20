@@ -18,7 +18,16 @@
             prop="password"
             :rules="{required: true, message: '密码不能为空', trigger: 'blur'}"
           >
-            <Input type="text" size="large" v-model="formInline.password" placeholder="请输入密码"/>
+            <Input
+              :type="lookPassword ? 'text' : 'password'"
+              size="large"
+              v-model="formInline.password"
+              placeholder="请输入密码"
+            >
+              <span slot="suffix" style="border-left: 1px solid #dcdee2;padding-left: 5px;">
+                <Icon @click="lookPassword = !lookPassword" :type="lookPassword ? 'ios-eye-outline' : 'ios-eye-off'"/>
+              </span>
+            </Input>
           </FormItem>
           <FormItem>
             <Button style="width: 100%;" type="primary" @click="handleSubmit('login')">登录</Button>
@@ -53,11 +62,11 @@
             </Input>
           </FormItem>
           <FormItem>
-            {{ss}}
-            <slider :disabled="false" v-model="ss"></slider>
+            <slider :disabled="!reg.test(formInline.mobile)" v-model="formInline.sliderStatus"></slider>
           </FormItem>
           <FormItem
             prop="mobileCode"
+            :class="['show_item', {'pitchOn': !formInline.sliderStatus}]"
             :rules="{required: true, message: '验证码不能为空', trigger: 'blur'}"
           >
             <Input
@@ -84,10 +93,186 @@
       </div>
     </div>
     <div class="zj_sign-in" :class="['zj_transition', {pitchOn: value === 'signIn'}]">
-
+      <div class="title">
+        <h2>账号注册</h2>
+      </div>
+      <Form ref="signIn" :model="formInline">
+        <FormItem
+          prop="username"
+          :rules="[{required: true, message: '公司名称不能为空', trigger: 'blur'}, {min: 6, message: '公司名称不能小于6为字符'}]"
+        >
+          <Input type="text" size="large" v-model="formInline.username" placeholder="请输入公司名称（营业执照上的全称）"/>
+        </FormItem>
+        <FormItem
+          prop="mobile"
+          :rules="{ validator: mobile, trigger: 'blur' }"
+        >
+          <Input type="text" size="large" v-model="formInline.mobile" placeholder="请输入手机号码">
+            <Select v-model="formInline.areaCode" slot="prepend" style="width: 80px">
+              <Option
+                v-for="item of areaCode"
+                :key="item.value"
+                :value="item.value"
+                :label="item.value"
+                style="width: 200px; display:flex; justify-content: space-between;"
+              >
+                <span>{{item.label}}</span>
+                <span>{{item.value}}</span>
+              </Option>
+            </Select>
+          </Input>
+        </FormItem>
+        <FormItem>
+          <slider :disabled="!reg.test(formInline.mobile)" v-model="formInline.sliderStatus"></slider>
+        </FormItem>
+        <FormItem
+          prop="mobileCode"
+          :class="['show_item', {'pitchOn': !formInline.sliderStatus}]"
+          :rules="{required: true, message: '验证码不能为空', trigger: 'blur'}"
+        >
+          <Input
+            type="text"
+            size="large"
+            v-model="formInline.mobileCode"
+            placeholder="验证码"
+            :class="['zj_get_code', {['zj_not_click']: codeTimer}]"
+          >
+            <Button slot="append" @click="timer" :disabled="codeTimer !== null">
+              {{codeTimer ? `已发送${codeTime}s` : '发送验证码'}}
+            </Button>
+          </Input>
+        </FormItem>
+        <FormItem
+          prop="password"
+          :class="['show_item', {'pitchOn': !formInline.sliderStatus}]"
+          :rules="{validator: password, trigger: 'blur'}"
+        >
+          <Input
+            :type="lookPassword ? 'text' : 'password'"
+            size="large"
+            v-model="formInline.password"
+            placeholder="8-20位密码，字母/数字/符号至少两种"
+          >
+              <span slot="suffix" style="border-left: 1px solid #dcdee2;padding-left: 5px;">
+                <Icon @click="lookPassword = !lookPassword" :type="lookPassword ? 'ios-eye-outline' : 'ios-eye-off'"/>
+              </span>
+          </Input>
+        </FormItem>
+        <FormItem>
+          <div>
+            <Checkbox v-model="formInline.keepLogin" :true-value="1" :false-value="0">已阅读并同意</Checkbox>
+            <a style="color: #118CFD;">《注册协议》</a>
+          </div>
+        </FormItem>
+        <FormItem>
+          <Button
+            style="width: 100%;"
+            type="primary"
+            :disabled="formInline.keepLogin !== 1"
+            @click="handleSubmit('signIn')"
+          >
+            入驻咨询
+          </Button>
+        </FormItem>
+      </Form>
     </div>
     <div class="zj_forget" :class="['zj_transition', {pitchOn: value === 'forget'}]">
-
+      <div class="title">
+        <h2>忘记密码</h2>
+      </div>
+      <Form ref="forget" :model="formInline" :class="['zj_transition', {pitchOn: type === '3'}]">
+        <FormItem
+          prop="mobile"
+          :rules="{ validator: mobile, trigger: 'blur' }"
+        >
+          <Input type="text" size="large" v-model="formInline.mobile" placeholder="请输入手机号码">
+            <Select v-model="formInline.areaCode" slot="prepend" style="width: 80px">
+              <Option
+                v-for="item of areaCode"
+                :key="item.value"
+                :value="item.value"
+                :label="item.value"
+                style="width: 200px; display:flex; justify-content: space-between;"
+              >
+                <span>{{item.label}}</span>
+                <span>{{item.value}}</span>
+              </Option>
+            </Select>
+          </Input>
+        </FormItem>
+        <FormItem>
+          <slider :disabled="!reg.test(formInline.mobile)" v-model="formInline.sliderStatus"></slider>
+        </FormItem>
+        <FormItem
+          prop="mobileCode"
+          :class="['show_item', {'pitchOn': !formInline.sliderStatus}]"
+          :rules="{required: true, message: '验证码不能为空', trigger: 'blur'}"
+        >
+          <Input
+            type="text"
+            size="large"
+            v-model="formInline.mobileCode"
+            placeholder="验证码"
+            :class="['zj_get_code', {['zj_not_click']: codeTimer}]"
+          >
+            <Button slot="append" @click="timer" :disabled="codeTimer !== null">
+              {{codeTimer ? `已发送${codeTime}s` : '发送验证码'}}
+            </Button>
+          </Input>
+        </FormItem>
+        <FormItem
+          prop="password"
+          :class="['show_item', {'pitchOn': !formInline.sliderStatus}]"
+          :rules="{validator: password, trigger: 'blur'}"
+        >
+          <Input
+            :type="lookPassword ? 'text' : 'password'"
+            size="large"
+            v-model="formInline.password"
+            placeholder="8-20位密码，字母/数字/符号至少两种"
+          >
+              <span slot="suffix" style="border-left: 1px solid #dcdee2;padding-left: 5px;">
+                <Icon @click="lookPassword = !lookPassword" :type="lookPassword ? 'ios-eye-outline' : 'ios-eye-off'"/>
+              </span>
+          </Input>
+        </FormItem>
+        <FormItem>
+          <Button
+            style="width: 100%;"
+            type="primary"
+            @click="type = '4'"
+          >
+            <!--            handleSubmit('forget')-->
+            下一步
+          </Button>
+        </FormItem>
+      </Form>
+      <Form ref="forgetOk" :model="formInline" :class="['zj_transition', {pitchOn: type === '4'}]">
+        <FormItem
+          prop="password"
+          :rules="{validator: password, trigger: 'blur'}"
+        >
+          <Input
+            :type="lookPassword ? 'text' : 'password'"
+            size="large"
+            v-model="formInline.password"
+            placeholder="8-20位密码，字母/数字/符号至少两种"
+          >
+              <span slot="suffix" style="border-left: 1px solid #dcdee2;padding-left: 5px;">
+                <Icon @click="lookPassword = !lookPassword" :type="lookPassword ? 'ios-eye-outline' : 'ios-eye-off'"/>
+              </span>
+          </Input>
+        </FormItem>
+        <FormItem>
+          <Button
+            style="width: 100%;"
+            type="primary"
+            @click="handleSubmit('forgetOk')"
+          >
+            确认修改
+          </Button>
+        </FormItem>
+      </Form>
     </div>
   </div>
 </template>
@@ -103,6 +288,20 @@
       callback()
     }
   }
+  const password = (rule, value, callback) => {
+    const regs = /(?!^(\d+|[a-zA-Z]+|[~!@#$%^&*?]+)$)^[\w~!@#$%^&*?]{8,20}$/
+    if (!value) {
+      callback(new Error('密码不能为空'))
+    } else if (value.length < 8) {
+      callback(new Error('密码不能小于8位字符'))
+    } else if (value.length > 20) {
+      callback(new Error('密码不能大于20位字符'))
+    } else if (!regs.test(value)) {
+      callback(new Error('字母/数字/符号至少两种'))
+    } else {
+      callback()
+    }
+  }
 
   import slider from "./slider"
 
@@ -110,6 +309,7 @@
     name: 'login',
     data() {
       return {
+        reg, // 正则匹配手机号码
         areaCode: [
           {
             value: '+86',
@@ -134,13 +334,14 @@
           username: '', // (string): 用户昵称
           mobile: '', //  (string): 手机号码 ,
           mobileCode: '', // (string): 验证码
-          areaCode: '+86' // 区号
+          areaCode: '+86', // 区号
+          sliderStatus: true
         },
-        type: '1', // 0: 账号登入；1：验证码登入
+        lookPassword: false,
+        type: '0', // 0: 账号登入；1：验证码登入; 2：账号注册
         codeTime: 60, // 验证码倒计时
         codeTimer: null, // 验证码计时器
-        verificationCode: '',
-        ss: true
+        verificationCode: ''
       }
     },
     props: {
@@ -156,10 +357,36 @@
             this.type = '0'
             break
           case 'signIn':
-            this.type = '3'
+            this.type = '2'
             break
           case 'forget':
-            this.type = '4'
+            this.type = '3'
+            break
+        }
+      },
+      type(to) {
+        this.lookPassword = false
+        this.clearTime()
+        switch (to) {
+          case '0':
+            this.formInline.keepLogin = 0
+            this.formInline.username = ''
+            this.formInline.password = ''
+            this.formInline.mobileCode = ''
+            this.formInline.mobile = ''
+            break
+          case '1':
+            break
+          case '2':
+            this.formInline.keepLogin = 0
+            this.formInline.username = ''
+            this.formInline.password = ''
+            this.formInline.mobileCode = ''
+            this.formInline.mobile = ''
+            break
+          case '3':
+            this.formInline.mobileCode = ''
+            this.formInline.mobile = ''
             break
         }
       }
@@ -168,6 +395,7 @@
     },
     methods: {
       mobile, // 验证手机号码
+      password, // 匹配密码
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
@@ -206,6 +434,17 @@
       }
     },
     mounted() {
+      switch (this.value) {
+        case 'login':
+          this.type = '0'
+          break
+        case 'signIn':
+          this.type = '2'
+          break
+        case 'forget':
+          this.type = '3'
+          break
+      }
     },
     beforeDestroy() {
       this.clearTime()
@@ -267,45 +506,57 @@
       }
     }
 
-    .ivu-form .ivu-form-item .ivu-form-item-content {
-      // 自动登录
-      .zj_automatic {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+    .ivu-form .ivu-form-item {
+      &.show_item {
+        transition: all .3s;
+        overflow: hidden;
+        height: 0;
+        margin-bottom: 0;
 
-      // 获取验证码
-      .zj_get_code {
-        .ivu-input-group-append {
-
+        &.pitchOn {
+          height: auto;
+          overflow: visible;
+          margin-bottom: 20px;
         }
       }
 
-      .ivu-input-wrapper {
-
+      .ivu-form-item-content {
+        // 自动登录
+        .zj_automatic {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
       }
     }
   }
 </style>
 
 <style lang="scss">
-  // 获取验证码
-  .zj_get_code {
-    .ivu-input-group-append {
-      color: #fff;
-      background: rgb(47, 141, 240);
-      border-color: transparent;
-
-      .ivu-btn:hover {
-        background: transparent;
-        border-color: transparent;
+  .zj_login_module {
+    // 获取验证码
+    .zj_get_code {
+      .ivu-input-group-append {
         color: #fff;
+        background: rgb(47, 141, 240);
+        border-color: transparent;
+
+        .ivu-btn:hover {
+          background: transparent;
+          border-color: transparent;
+          color: #fff;
+        }
+      }
+
+      &.zj_not_click .ivu-input-group-append {
+        background: rgba(171, 215, 255, 1);
       }
     }
 
-    &.zj_not_click .ivu-input-group-append {
-      background: rgba(171, 215, 255, 1);
+    .ivu-btn.ivu-btn-primary[disabled] {
+      background: #ABD7FF;
+      border-color: #ABD7FF;
+      color: #FFF;
     }
   }
 </style>
