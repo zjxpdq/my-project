@@ -53,15 +53,21 @@
             </Input>
           </FormItem>
           <FormItem>
-            <slider></slider>
+            {{ss}}
+            <slider :disabled="false" v-model="ss"></slider>
           </FormItem>
           <FormItem
             prop="mobileCode"
             :rules="{required: true, message: '验证码不能为空', trigger: 'blur'}"
           >
-            <Input type="text" size="large" v-model="formInline.mobileCode" placeholder="验证码"
-                   :class="['zj_get_code', {['zj_not_click']: codeTimer}]">
-              <Button slot="append" @click="timer" :disabled="codeTimer">
+            <Input
+              type="text"
+              size="large"
+              v-model="formInline.mobileCode"
+              placeholder="验证码"
+              :class="['zj_get_code', {['zj_not_click']: codeTimer}]"
+            >
+              <Button slot="append" @click="timer" :disabled="codeTimer !== null">
                 {{codeTimer ? `已发送${codeTime}s` : '发送验证码'}}
               </Button>
             </Input>
@@ -133,7 +139,8 @@
         type: '1', // 0: 账号登入；1：验证码登入
         codeTime: 60, // 验证码倒计时
         codeTimer: null, // 验证码计时器
-        verificationCode: ''
+        verificationCode: '',
+        ss: true
       }
     },
     props: {
