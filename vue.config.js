@@ -1,5 +1,5 @@
 /**
- * user name:  zjxpd
+ * user name:  zjxpdq
  * creation time:  2019/9/17 11:04
  */
 const path = require('path')
@@ -17,7 +17,7 @@ module.exports = {
     port: 9527,
     open: true,
     overlay: {
-      warnings: true,
+      warnings: false,
       errors: true
     },
     disableHostCheck: true

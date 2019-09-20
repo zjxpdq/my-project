@@ -25,6 +25,7 @@ module.exports = {
     'no-multiple-empty-lines': [1, {'max': 2}],
     'no-mixed-spaces-and-tabs': [1],
     'indent': [0, 2],
+    'max-len': [2, {'code': 300}],
     'no-extra-parens': 2,
     'no-extra-semi': 2,
     'no-multi-spaces': 2,
@@ -46,12 +47,13 @@ module.exports = {
     'no-trailing-spaces': 2,
     'padded-blocks': [2, 'never'],
     'quotes': [0, 'single', 'avoid-escape'],
-    'vue/no-parsing-error': [2, {'x-invalid-end-tag': false}],
+    'vue/no-parsing-error': [0, {'x-invalid-end-tag': false}],
     "no-new-func": 1,
     "no-new-object": 2,
     "no-new-require": 2,
     "no-spaced-func": 2,
     "space-before-function-paren": [0, "always"],
-    'linebreak-style': [0, "windows"]
+    'linebreak-style': [0, "windows"],
+    "prefer-const": 0
   }
 }
