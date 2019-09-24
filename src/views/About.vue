@@ -1,37 +1,14 @@
 <template>
   <div class="About">
-    <!--    <countdown :init="init" :time="5" @on-ok="aa"></countdown>-->
-    <!--    <br>-->
-    <!--    <a @click="init = true">开始</a>-->
-    <!--    <br>-->
-    <!--    <a @click="init = false">停止</a>-->
-    <!--    <br>-->
-    <!--    <a @click="init = null">清除</a>-->
-    <!--    <slide-verify-->
-    <!--      :l="42"-->
-    <!--      :r="10"-->
-    <!--      :w="310"-->
-    <!--      :h="155"-->
-    <!--      @success="onSuccess"-->
-    <!--      @fail="onFail"-->
-    <!--      @refresh="onRefresh"-->
-    <!--      :slider-text="text"-->
-    <!--    ></slide-verify>-->
-    <!--    <div>{{msg}}</div>-->
-    
-    <login-module v-model="initial"></login-module>
-    <a @click="initial = 'login'">登录</a>
-    <br>
-    <a @click="initial = 'signIn'">注册</a>
-    <br>
-    <a @click="initial = 'forget'">忘记密码</a>
-
+    <iv-city :level="2" :is-text="true" v-model="city"></iv-city>
+    {{city}}
   </div>
 </template>
 
 <script>
   // import Countdown from "./Countdown"
-  import LoginModule from "./login_module"
+  // import LoginModule from "./login_module"
+  import IvCity from '../components/iv_city/iv_city'
 
   export default {
     name: 'About',
@@ -39,8 +16,9 @@
       return {
         msg: '',
         text: '向右滑动',
-        init: null,
-        initial: 'login'
+        init: false,
+        initial: 'login',
+        city: ['广东省', '广州市', '天河区']
       }
     },
     created() {
@@ -61,7 +39,8 @@
     },
     components: {
       // Countdown,
-      LoginModule
+      // LoginModule,
+      IvCity
     },
     computed: {},
     beforeDestroy() {
