@@ -21,7 +21,7 @@ module.exports = {
     'arrow-parens': 0,
     'generator-star-spacing': 0,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'semi': [0],
+    'semi': 0,
     'no-multiple-empty-lines': [1, {'max': 2}],
     'no-mixed-spaces-and-tabs': [1],
     'indent': [0, 2],
