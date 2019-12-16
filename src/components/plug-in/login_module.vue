@@ -303,7 +303,7 @@
     }
   }
 
-  import slider from "../components/slider/slider"
+  import slider from "../slider/slider"
 
   export default {
     name: 'login',

@@ -55,6 +55,7 @@ module.exports = {
     "space-before-function-paren": [0, "always"],
     'linebreak-style': [0, "windows"],
     "prefer-const": 0,
-    "vue/return-in-computed-property": 0
+    "vue/return-in-computed-property": 0,
+    "vue/valid-v-bind": 0
   }
 }

@@ -4,9 +4,9 @@
      {{city}}
 
      <IvBaiDuMap></IvBaiDuMap>-->
-    <Button @click="aa">bb</Button>
+    <!--<Button @click="aa">bb</Button>-->
 
-    <ive-table :columns="columns" :data="data" ref="qq"></ive-table>
+    <!--<ive-table :columns="columns" :data="data" ref="qq"></ive-table>-->
 
   </div>
 </template>
@@ -17,7 +17,7 @@ import LoginModule from "./login_module"
 import IvCity from '../components/iv_city/iv_city'
 import IvBaiDuMap from "../components/baidu_map/iv_baidu_map" */
   import IveTable from './../components/ive_table'
-  import row from './template_ive'
+  import row from '../components/plug-in/template_ive'
 
   export default {
     name: 'About',
