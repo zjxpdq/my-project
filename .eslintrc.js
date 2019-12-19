@@ -25,7 +25,7 @@ module.exports = {
     'no-multiple-empty-lines': [1, {'max': 2}],
     'no-mixed-spaces-and-tabs': [1],
     'indent': [0, 2],
-    'max-len': [2, {'code': 300}],
+    'max-len': [0, {'code': 300}],
     'no-extra-parens': 2,
     'no-extra-semi': 2,
     'no-multi-spaces': 2,
@@ -56,6 +56,9 @@ module.exports = {
     'linebreak-style': [0, "windows"],
     "prefer-const": 0,
     "vue/return-in-computed-property": 0,
-    "vue/valid-v-bind": 0
+    "vue/valid-v-bind": 0,
+    "valid-jsdoc": 0,
+    "guard-for-in": 0,
+    "prefer-promise-reject-errors": 0
   }
 }

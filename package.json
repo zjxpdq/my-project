@@ -12,9 +12,11 @@
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "current-device": "^0.10.0",
+    "echarts": "^4.5.0",
     "live2d-widget": "^3.1.4",
     "view-design": "^4.0.2",
     "vue": "^2.6.10",
+    "vue-jsonp": "^0.1.8",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
   },
