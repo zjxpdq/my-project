@@ -30,25 +30,31 @@
     </Row>
 
     <div class="qq_map">
-      <qq-map
+      <!--
         :province="dq.sheng"
         :city="dq.shi"
         :area="dq.qu"
-        :is-region="false"
+      -->
+
+      <qq-map
+        keyword="UVCBZ-TR7WU-3PQVU-4E5JA-EMVPH-TLFVC"
+        is-region="1"
         v-model="dq"
         :back-key="{
-            province: 'sheng', // 需要返回省的 key 双向数据绑定的值的 key
-            city: 'shi', // 需要返回市的 key 双向数据绑定的值的 key
-            district: 'qu', // 需要返回区的 key 双向数据绑定的值的 key
-            location: true, // 需要返回经纬度的 key 双向数据绑定的值的 key
-            lat: false, // 需要返回经度的 key 双向数据绑定的值的 key
-            lng: false // 需要返回纬度的 key 双向数据绑定的值的 key
-          }"
+          province: 'sheng', // 需要返回省的 key 双向数据绑定的值的 key
+          city: 'shi', // 需要返回市的 key 双向数据绑定的值的 key
+          district: 'qu', // 需要返回区的 key 双向数据绑定的值的 key
+          location: true, // 需要返回经纬度的 key 双向数据绑定的值的 key
+        }"
+        :city-details="{
+          province: '广东省', // 省
+          city: '广州市1' // 市
+        }"
       />
     </div>
 
 
-    {{queryList}}
+    {{dq}}
 
     <div class="map_box">
       <pie-map
