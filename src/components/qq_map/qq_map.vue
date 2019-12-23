@@ -443,7 +443,7 @@
         Object.assign(obj, config)
 
         this.$Modal[type](obj)
-      }
+      } // 警告提示
     },
     mounted() {
       this.initMap()
