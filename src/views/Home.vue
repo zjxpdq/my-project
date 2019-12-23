@@ -50,10 +50,6 @@
           district: 'qu', // 需要返回区的 key 双向数据绑定的值的 key
           location: true, // 需要返回经纬度的 key 双向数据绑定的值的 key
         }"
-        :city-details="{
-          province: '广东省', // 省
-          city: '广州市1' // 市
-        }"
       />
     </div>
 

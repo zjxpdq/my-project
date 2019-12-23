@@ -22,6 +22,7 @@
       </div>
     </div>
     <div id="qqMap" ref="qqMap"></div>
+    {{getCity}}
   </div>
 </template>
 
@@ -58,21 +59,6 @@
         required: true
       }, // 地图的 key 是必须要传的
       value: [Object, Array], // 传入的键值或者双向数据绑定的键值 如果是数组的话传入返回的顺序为 省 => 市 => 区 => 街道 => 详细地址 => 经纬度的集合 => 经度 => 纬度
-      cityDetails: {
-        type: Object,
-        default() {
-          return {
-            province: String, // 省
-            city: String, // 市
-            district: String, // 区
-            location: String, // 经纬度的合计
-            lat: String, // 经度
-            lng: String, // 纬度
-            street: String, // 街道
-            rough: String // 详细地址
-          }
-        }
-      }, // 需要回显的城市详情
       backKey: {
         type: Object,
         default() {
@@ -470,7 +456,6 @@
           }
         }) // 剔除未指定返回的 key
         let obj = {}
-        Object.assign(obj, this.cityDetails)
         Object.assign(obj, this.value)
         let blackObj = {
           province: null, // 省
