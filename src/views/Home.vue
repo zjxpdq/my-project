@@ -23,11 +23,14 @@
       <Col :span="6">
         <Select v-model="dq.qu" style="width:200px">
           <Option value="天河区">天河区</Option>
+          <Option value="番禺区">番禺区</Option>
           <Option value="宝安区">宝安区</Option>
           <Option value="福田区">福田区</Option>
         </Select>
       </Col>
     </Row>
+
+    <Button @click="getCity">修改地点</Button>
 
     <div class="qq_map">
       <!--
@@ -37,6 +40,7 @@
       -->
 
       <qq-map
+        ref="qqMap"
         keyword="UVCBZ-TR7WU-3PQVU-4E5JA-EMVPH-TLFVC"
         is-region="1"
         v-model="dq"
@@ -123,14 +127,25 @@
         dq: {
           sheng: '',
           shi: '',
-          qu: ''
+          qu: '',
+          location: ''
         },
         queryList: ''
       }
     },
     created() {
     },
-    methods: {},
+    methods: {
+      getCity() {
+        this.$refs.qqMap.getAddress('22.929465,113.512888')
+        /* this.dq = {
+          sheng: '广东省',
+          shi: '广州市',
+          qu: '番禺区',
+          location: '22.929465,113.512888'
+        }*/
+      }
+    },
     components: {
       L2dWidget,
       PieMap,
