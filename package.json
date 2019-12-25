@@ -13,6 +13,7 @@
     "core-js": "^2.6.5",
     "current-device": "^0.10.0",
     "echarts": "^4.5.0",
+    "js-cookie": "^2.2.1",
     "live2d-widget": "^3.1.4",
     "view-design": "^4.0.2",
     "vue": "^2.6.10",

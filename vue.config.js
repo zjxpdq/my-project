@@ -20,8 +20,16 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    disableHostCheck: true
-    // proxy: {}
+    disableHostCheck: true,
+    proxy: {
+      '/api': {
+        target: process.env.VUE_APP_BASE_API + '', // 对应自己的接口
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   },
   configureWebpack: {
     name: 'vue-3.0',

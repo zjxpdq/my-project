@@ -6,40 +6,18 @@
 
     <l-2d-widget :model="button" v-if="false"></l-2d-widget>
 
+    <Button @click="login">登入</Button>
+    <Button @click="region = { province: '广东省', city: '广州市', district: '天河区'}">回显地址</Button>
+
     <h2>测试</h2>
 
-    <Row :gutter="18">
-      <Col :span="6">
-        <Select v-model="dq.sheng" style="width:200px">
-          <Option value="广东省">广东省</Option>
-        </Select>
-      </Col>
-      <Col :span="6">
-        <Select v-model="dq.shi" style="width:200px">
-          <Option value="广州市">广州市</Option>
-          <Option value="深圳市">深圳市</Option>
-        </Select>
-      </Col>
-      <Col :span="6">
-        <Select v-model="dq.qu" style="width:200px">
-          <Option value="天河区">天河区</Option>
-          <Option value="番禺区">番禺区</Option>
-          <Option value="宝安区">宝安区</Option>
-          <Option value="福田区">福田区</Option>
-        </Select>
-      </Col>
-    </Row>
+    {{region}}
 
-    <Button @click="getCity">修改地点</Button>
+    <lv-region v-model="region"></lv-region>
 
     <div class="qq_map">
-      <!--
-        :province="dq.sheng"
-        :city="dq.shi"
-        :area="dq.qu"
-      -->
-
-      <qq-map
+      <!--<qq-map
+        v-if="false"
         ref="qqMap"
         keyword="UVCBZ-TR7WU-3PQVU-4E5JA-EMVPH-TLFVC"
         is-region="1"
@@ -50,11 +28,9 @@
           district: 'qu', // 需要返回区的 key 双向数据绑定的值的 key
           location: true, // 需要返回经纬度的 key 双向数据绑定的值的 key
         }"
-      />
+      />-->
+
     </div>
-
-
-    {{dq}}
 
     <div class="map_box">
       <pie-map
@@ -75,7 +51,10 @@
   import L2dWidget from "../components/L2D"
   import PieMap from '../components/pie-map'
   import LineMap from '../components/line-map'
-  import QqMap from './../components/qq_map'
+  // import QqMap from './../components/qq_map'
+  import LvRegion from '../components/lv_region'
+  import {login} from "../api/v1"
+  import Cookie from 'js-cookie'
 
   export default {
     name: 'Home',
@@ -126,27 +105,40 @@
           qu: '',
           location: ''
         },
-        queryList: ''
+        queryList: '',
+        region: {
+          province: '',
+          city: '',
+          district: ''
+        },
+        flag: true
       }
     },
     created() {
     },
     methods: {
+      login() {
+        login.log({
+          "keepLogin": 0,
+          "password": 'ms123456',
+          "username": '1073'
+        }).then(res => {
+          if (res.status === 200) {
+            Cookie.set('token', res.t.access_token)
+            this.flag = true
+          }
+        })
+      },
       getCity() {
         this.$refs.qqMap.getAddress('22.929465,113.512888')
-        /* this.dq = {
-          sheng: '广东省',
-          shi: '广州市',
-          qu: '番禺区',
-          location: '22.929465,113.512888'
-        }*/
       }
     },
     components: {
       L2dWidget,
       PieMap,
       LineMap,
-      QqMap
+      // QqMap,
+      LvRegion
     },
     computed: {},
     mounted() {
