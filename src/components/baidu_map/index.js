@@ -1,3 +1,3 @@
-import IvBaiDuMap from "./iv_baidu_map"
+import IvBaiDuMap from "./lv_baidu_map"
 
 export default IvBaiDuMap

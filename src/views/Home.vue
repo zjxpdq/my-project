@@ -29,7 +29,7 @@
           location: true, // 需要返回经纬度的 key 双向数据绑定的值的 key
         }"
       />-->
-
+      <lv-bai-du-map></lv-bai-du-map>
     </div>
 
     <div class="map_box">
@@ -55,6 +55,7 @@
   import LvRegion from '../components/lv_region'
   import {login} from "../api/v1"
   import Cookie from 'js-cookie'
+  import LvBaiDuMap from './../components/baidu_map'
 
   export default {
     name: 'Home',
@@ -138,7 +139,8 @@
       PieMap,
       LineMap,
       // QqMap,
-      LvRegion
+      LvRegion,
+      LvBaiDuMap
     },
     computed: {},
     mounted() {
